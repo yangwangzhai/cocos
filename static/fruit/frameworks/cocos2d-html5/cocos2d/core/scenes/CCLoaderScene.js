@@ -42,31 +42,41 @@ cc.LoaderScene = cc.Scene.extend({
      */
     init : function(){
         var self = this;
-
+        var size = this.sizes = cc.winSize;
         //logo
         var logoWidth = 160;
         var logoHeight = 200;
 
         // bg
-        var bgLayer = self._bgLayer = new cc.LayerColor(cc.color(32, 32, 32, 255));
+        var fontSize = 24, lblHeight =  -logoHeight / 2 + 100;
+        var bgLayer = self._bgLayer = new cc.Sprite(res.s_loading_bg); //new cc.LayerColor(cc.color(32, 32, 32, 255));
+        bgLayer.setPosition(cc.visibleRect.bottom.x, cc.visibleRect.right.y);
+        // bgLayer.setScale(0.65);
+        // bgLayer.setRotation(90);
+        //bgLayer.setScale(0.5);
         self.addChild(bgLayer, 0);
 
-        //image move to CCSceneFile.js
-        var fontSize = 24, lblHeight =  -logoHeight / 2 + 100;
-        if(cc._loaderImage){
-            //loading logo
-            cc.loader.loadImg(cc._loaderImage, {isCrossOrigin : false }, function(err, img){
-                logoWidth = img.width;
-                logoHeight = img.height;
-                self._initStage(img, cc.visibleRect.center);
-            });
-            fontSize = 14;
-            lblHeight = -logoHeight / 2 - 10;
-        }
+
+
+        /*  var bgLayer = self._bgLayer = new cc.LayerColor(cc.color(32, 32, 32, 255));
+         self.addChild(bgLayer, 0);
+
+         //image move to CCSceneFile.js
+
+         if(cc._loaderImage){
+         //loading logo
+         cc.loader.loadImg(cc._loaderImage, {isCrossOrigin : false }, function(err, img){
+         logoWidth = img.width;
+         logoHeight = img.height;
+         self._initStage(img, cc.visibleRect.center);
+         });
+         fontSize = 14;
+         lblHeight = -logoHeight / 2 - 10;
+         }*/
         //loading percent
-        var label = self._label = new cc.LabelTTF("Loading... 0%", "Arial", fontSize);
-        label.setPosition(cc.pAdd(cc.visibleRect.center, cc.p(0, lblHeight)));
-        label.setColor(cc.color(180, 180, 180));
+        var label = self._label = new cc.LabelTTF("正在加载游戏资源...... 0%", "Arial", fontSize);
+        label.setPosition(size.width/2 , size.height/2 );
+        label.setColor(cc.color(255, 255, 255));
         bgLayer.addChild(this._label, 10);
         return true;
     },
@@ -95,7 +105,7 @@ cc.LoaderScene = cc.Scene.extend({
      */
     onExit: function () {
         cc.Node.prototype.onExit.call(this);
-        var tmpStr = "Loading... 0%";
+        var tmpStr = "正在加载游戏资源...... 0%";
         this._label.setString(tmpStr);
     },
 
@@ -121,7 +131,7 @@ cc.LoaderScene = cc.Scene.extend({
             function (result, count, loadedCount) {
                 var percent = (loadedCount / count * 100) | 0;
                 percent = Math.min(percent, 100);
-                self._label.setString("Loading... " + percent + "%");
+                self._label.setString("正在加载游戏资源...... " + percent + "%");
             }, function () {
                 if (self.cb)
                     self.cb.call(self.target);

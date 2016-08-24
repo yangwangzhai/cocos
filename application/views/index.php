@@ -1,6 +1,6 @@
 <!DOCTYPE HTML>
 <html>
-    <head>
+<head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
     <title>幸运水果机</title>
     <meta name="viewport" content="initial-scale=1">
@@ -10,40 +10,40 @@
     <meta name="x5-fullscreen" content="true"/>
     <meta name="360-fullscreen" content="true"/>
     <style>
-body, canvas, div {
-	-moz-user-select: none;
-	-webkit-user-select: none;
-	-ms-user-select: none;
-	-khtml-user-select: none;
-	-webkit-tap-highlight-color: rgba(0, 0, 0, 0);
-	
-   
-}
- body{ background:url('static/fruit/res/loading_bg.png') no-repeat center center;
-	 background-attachment:fixed;
-	/* background-repeat:no-repeat;*/
-	 background-size:cover;
-	 -moz-background-size:cover;
-	 -webkit-background-size:cover;
-   
-}
- .bodycss{ background:url('static/fruit/res/loading_bg.png') no-repeat center center;
-	 background-attachment:fixed;
-	/* background-repeat:no-repeat;*/
-	 background-size:cover;
-	 -moz-background-size:cover;
-	 -webkit-background-size:cover;
-   
-}
-</style>
-    </head>
+        body, canvas, div {
+            -moz-user-select: none;
+            -webkit-user-select: none;
+            -ms-user-select: none;
+            -khtml-user-select: none;
+            -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
 
-    <body>
-    
+
+        }
+        /* body{ background:url('static/fruit/res/loading_bg.png') no-repeat center center;
+             background-attachment:fixed;
+            *//* background-repeat:no-repeat;*//*
+             background-size:cover;
+             -moz-background-size:cover;
+             -webkit-background-size:cover;
+
+        }*/
+        .bodycss{ background:url('static/fruit/res/loading_bg.png') no-repeat center center;
+            background-attachment:fixed;
+            background-repeat:no-repeat;
+            background-size:cover;
+            -moz-background-size:cover;
+            -webkit-background-size:cover;
+
+        }
+    </style>
+</head>
+
+<body>
+
 <script src="static/fruit/res/loading.js"></script>
 <canvas id="gameCanvas" width="320" height="480"></canvas>
 <script>
- var wx_info = {openid:'<?=$openid?>',nickname:'<?=$nickname?>',headimgurl:'<?=$headimgurl?>',sex:'<?=$sex?>',total_gold:<?=$smokeBeansCount?>};
+    var wx_info = {openid:'<?=$openid?>',nickname:'<?=$nickname?>',headimgurl:'<?=$headimgurl?>',sex:'<?=$sex?>',total_gold:<?=$smokeBeansCount?>};
     (function () {
         var nav = window.navigator;
         var ua = nav.userAgent.toLowerCase();
@@ -62,6 +62,6 @@ body, canvas, div {
 </script>
 <script src="static/fruit/frameworks/cocos2d-html5/CCBoot.js"></script>
 <script cocos src="static/fruit/main.js"></script>
-    
+
 </body>
 </html>
