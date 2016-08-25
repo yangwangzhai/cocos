@@ -24,16 +24,17 @@ var PlayLayer = cc.Layer.extend({
     bet61:null,
     bet7:null,
     bet8:null,
-    ctor:function () {
+    ctor: function () {
         //////////////////////////////
         // 1. super init first
         this._super();
-
+        var self = this;
+        var g_scale = 1;
+        var pNum = new PictureNumber();
         /////////////////////////////
         // 2. add a menu item with "X" image, which is clicked to quit the program
         //    you may modify it.
         // ask the window size
-        var g_scale = 1;
         var size = this.sizes = cc.winSize;
 
         this.speed_arr = [1, 0.6, 0.4, 0.4];
@@ -234,7 +235,6 @@ var PlayLayer = cc.Layer.extend({
         this.big_small.value = 0;
         this.addChild(this.big_small, 3);
 
-
         // add "HelloWorld" splash screen"
         //创建一个精灵sprite，通过sprite.attr来设置sprite的属性，然后addChild到当前Layer。
         this.sprite = new cc.Sprite(res.s_bg);
@@ -245,13 +245,19 @@ var PlayLayer = cc.Layer.extend({
         });
         this.addChild(this.sprite, 0);
 
-        this.mast_sprite = new cc.Sprite(res.s_mask);
-        this.mast_sprite.attr({
+        this.mask_sprite = new cc.Sprite(res.s_mask);
+        this.mask_sprite.attr({
             x: 116,
             y: size.height - 238,
-            scale:  1
+            scale: g_scale
         });
-        this.addChild(this.mast_sprite,0);
+        this.addChild(this.mask_sprite, 0);
+
+        //添加闪一闪
+        cc.spriteFrameCache.addSpriteFrames(res.s_mask_plist);
+        this.spriteMaskRun();
+        this.mask_sprite_width = 76 * g_scale - 8;
+        this.mask_sprite_height = 69 * g_scale - 8;
 
         //我的烟豆财富
         var r_num = this.getRandomNum(1,9999);
@@ -263,15 +269,14 @@ var PlayLayer = cc.Layer.extend({
         this.my_gold.value = wx_info.total_gold;
         this.addChild(this.my_gold, 3)
 
-
-
-
-
-
-
-
-
-
+        //比倍烟豆
+        this.result_gold = new PictureNumber();
+        this.result_gold.buildNumber(0, res.s_num_big);
+        this.result_gold.value = 0;
+        this.result_gold.setPosition(size.width / 2 - 36,size.height - 191);
+        this.result_gold.setAnchorPoint(1, 0);
+        this.result_gold.scale = g_scale;
+        this.addChild(this.result_gold);
 
         return true;
     }, onBugMe: function (node) {cc.audioEngine.playEffect(res.s_run,false);
@@ -477,8 +482,8 @@ var PlayLayer = cc.Layer.extend({
         // this.mask_sprite.runAction( cc.RepeatForever.create(this.spangled_action) );
     },menuItemBetCallback: function(node){   //点击下注按钮
         var bet_on_audio = [res.s_bet_1, res.s_bet_2, res.s_bet_3, res.s_bet_4, res.s_bet_5, res.s_bet_6, res.s_bet_7, res.s_bet_8];
-        cc.audioEngine.playEffect(bet_on_audio[node.bianhao],false);
-        var bet_node = this.getChildByName('bet_num_'+node.bianhao);
+        cc.audioEngine.playEffect(bet_on_audio[node.bianhao],false);//播放音频
+        var bet_node = this.getChildByName('bet_num_'+node.bianhao);//通过对象属性获取该对象
         var sum = bet_node.value + 1;
         var self = this;
         xhr.open("POST", "./index.php?c=fruit&m=save_bet");
