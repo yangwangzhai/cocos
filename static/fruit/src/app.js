@@ -492,7 +492,7 @@ var PlayLayer = cc.Layer.extend({
             if (xhr.readyState == 4 && (xhr.status >= 200 && xhr.status <= 207)) {
                 var httpStatus = xhr.statusText;
                 var responseObj = {sum:0, game_id:0};
-                responseObj = eval('(' + xhr.responseText + ')');
+                responseObj = eval('(' + xhr.responseText + ')');//转换为对象数组
                 //设置下注的值增加
                 bet_node.value = responseObj.sum;
                 var cur_num = bet_node.value;
