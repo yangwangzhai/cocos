@@ -1,5 +1,7 @@
 /**
  * Created by Administrator on 2016/8/12.
+ * 从数字图片上，截取一个数字
+ *
  */
 var PictureNumber = cc.Sprite.extend({
     m_Number:null,
